@@ -1,0 +1,6 @@
+- post a donation
+- post a request, maybe link directly with a giveaway
+- style donation/request page
+
+- email confirm for signup
+- password recovery

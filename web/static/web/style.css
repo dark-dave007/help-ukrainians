@@ -1,0 +1,197 @@
+:root {
+    --blue: #0057B7;
+    --yellow: #FFDD00;
+    --transition-speed: 600ms;
+    font-size: 16px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--yellow);
+    color: var(--blue);
+}
+
+header {
+    justify-content: center;
+    text-align: center;
+    padding: 10px 0 25px 0;
+    background-color: var(--blue);
+    color: var(--yellow);
+}
+
+nav {
+    position: fixed;
+    background: var(--yellow);
+    /* transition: width 200ms ease; Animation for nav hover */
+}
+
+.navbar-nav {
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;   
+    height: 100%;
+}
+
+.logo {
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    text-align: center;
+    letter-spacing: 0.3ch;
+}
+
+.logo i {
+    transform: rotate(0);
+    transition: var(--transition-speed);
+}
+
+.nav-item {
+    width: 100%;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    height: 5rem;
+    color: var(--blue);
+    text-decoration: none;
+    filter: grayscale(100%) opacity(0.7);
+    transition: var(--transition-speed);
+}
+
+.link-text {
+    display: none;
+    margin-left: 1rem;
+}
+
+.fa-fw { 
+    transform: scale(1.75); 
+}
+
+.nav-link i {
+    margin: 0 1.5rem;
+} 
+
+nav:hover .logo i {
+    transform: rotate(-540deg);
+}
+
+nav:hover .logo .nav-link {
+    /* Text color stays blue */
+    filter: grayscale(0%) opacity(1);
+}
+
+.nav-link:hover {
+    filter: grayscale(0%) opacity(1);
+}
+
+main {
+    justify-content: center;
+    text-align: center;
+    padding-top: 25px;
+    margin-left: 5rem;
+    margin-right: 5rem;
+    padding: 1rem;
+}
+
+/* Small Screens */
+@media only screen and (max-width: 600px) {
+    main {
+        margin: 0;
+    }
+    
+    nav {
+        bottom: 0;
+        width: 100vw;
+        height: 5rem;
+    }
+
+    .logo {
+        display: none;
+    }
+
+    .navbar-nav {
+        flex-direction: row;
+    }
+
+    .nav-link {
+        justify-content: center;
+    }
+
+    main {
+        margin: 0;
+    }
+
+}
+
+/* Large Screens */
+@media only screen and (min-width: 600px) {
+    nav {
+        width: 5rem;
+        height: 100vh;
+    }
+
+    nav:hover {
+        width: 16rem;
+    }
+
+    nav:hover .link-text {
+        display: block;
+    }
+
+}
+
+h1 {
+    font-size: 30px;
+    padding-top: 5px;
+}
+
+a {
+    text-decoration: underline;
+}
+
+.input-group {
+    margin: 5px;
+    text-align: center;
+}
+
+.text-input {
+    display: inline-block;
+    width: auto;
+    padding: .375rem .75rem;
+    line-height: 1.5;
+    font-size: 0.9rem;
+    color: var(--blue);
+    border: 1px solid var(--blue);
+    border-radius: 0.25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.text-input:hover {
+    border-color: var(--yellow);
+}
+
+.text-input:focus { /* If someone hovers while inputting */
+    border-color: var(--orange);
+}
+
+.btn {
+    display: inline-block;
+    text-decoration: none;
+    font-weight: bold;
+    color: var(--yellow);
+    background-color: var(--blue);
+    border: 1px solid var(--blue);
+    border-radius: 40px;
+    padding: .375rem .75rem;
+    margin: 15px;
+    transition: all 0.5s ease;
+    cursor: pointer;
+}

@@ -1,0 +1,77 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Help Ukrainians!{% endblock title %}</title> {% comment %}Defaults to this{% endcomment %}
+
+    <link rel="stylesheet" href="{% static 'web/style.css' %}" />
+    <script src="https://kit.fontawesome.com/171a49472a.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet"> 
+  </head>
+  <body>
+    <header>
+      <p>Help your fellow Ukrainians!</p>
+      {% block header %}{% endblock header %}
+    </header>
+    <nav>
+      <ul class="navbar-nav">
+        <li class="logo">
+          <a href="#" class="nav-link">
+            <span class="link-text">Ukraine</span>
+            <i class="fas fa-angle-double-right fa-fw"></i>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="{% url 'index' %}" class="nav-link">
+            <i class="fas fa-home fa-fw"></i>
+            <span class="link-text">Home</span>
+          </a>
+        </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a href="{% url 'post_request' %}" class="nav-link">
+            <i class="fas fa-question-circle fa-fw"></i>
+            <span class="link-text">Request</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="fas fa-exclamation-circle fa-fw"></i>
+            <span class="link-text">Give</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'logout' %}" class="nav-link">
+            <i class="fas fa-sign-out-alt fa-fw"></i>
+            <span class="link-text">Logout</span>
+          </a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a href="{% url 'login' %}" class="nav-link">
+            <i class="fas fa-sign-in-alt fa-fw"></i>
+            <span class="link-text">Login</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'register' %}" class="nav-link">
+            <i class="fas fa-user-plus fa-fw"></i>
+            <span class="link-text">Sign up</span>
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
+    {% comment %}TODO: Floating sidebar for navigation{% endcomment %}
+    <main>
+      {% block body %} {% endblock %}
+    </main>
+  </body>
+</html>

@@ -1,0 +1,12 @@
+{% extends "web/layout.html" %} 
+
+{% block header %}
+    <h1>Home</h1>
+{% endblock header %}
+
+{% block body %}
+    <h1>Main content</h1>
+    {% for post in images %}
+        <img src="{{ post.img.url }}" style="width: auto; height: 100px;">
+    {% endfor %}
+{% endblock body %}

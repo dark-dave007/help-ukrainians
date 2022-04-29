@@ -1,0 +1,23 @@
+{% extends "web/layout.html" %} 
+
+{% block header %}
+    <h1>Login</h1>
+{% endblock header %}
+
+{% block body %}
+    {% if message %}<div>{{ message }}</div>{% endif %}
+    <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        <div class="input-group">
+            <input autofocus="" class="text-input" type="text" name="username" placeholder="Dirk J.">
+        </div>
+        <div class="input-group">
+            <input class="text-input" type="email" name="email" placeholder="Email">
+        </div>
+        <div class="input-group">
+            <input class="text-input" type="password" name="password" placeholder="Password">
+        </div>
+        <input type="submit" class="btn" value="Login">
+    </form>
+    <p>Don't have an account? <a href="{% url 'register' %}">Register here.</a></p>
+{% endblock body %}
