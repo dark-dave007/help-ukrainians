@@ -7,6 +7,28 @@
 {% block body %}
     <h1>Main content</h1>
     {% for post in images %}
-        <img src="{{ post.img.url }}" style="width: auto; height: 100px;">
+    <div class="card">
+        <div class="img-box">
+        {% if post.img %}
+            <img src="{{ post.img.url }}">
+        {% else %}
+            <div class="content">
+                <i class="fas fa-image fa-fw"></i>
+                <p>No Image</p>
+            </div>
+        {% endif %}
+        </div>
+        <div class="content">
+            <h1>{{ post.title }}</h1>
+            <h2 class="category">{{ post.category }}</h2>
+            <a href="#" class="get">
+                {% if post.get_type == "donation" %}
+                Get item
+                {% else %}
+                Donate item
+                {% endif %}
+            </a>
+        </div>
+    </div>
     {% endfor %}
 {% endblock body %}

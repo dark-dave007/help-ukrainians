@@ -7,13 +7,13 @@
 {% block body %}
     <h1>Create a post</h1>
     {% if message %}<div>{{ message }}</div>{% endif %}
-    <form action="{% url 'post_request' %}" method="post" enctype="multipart/form-data">
+    <form action="{% url url %}" method="post" enctype="multipart/form-data" class="post-form">
         {% csrf_token %}
         {% for x in form %}
             <div class="input-group">
                 {{ x }}
             </div>
         {% endfor %}
-        <input type="submit" class="btn" value="Post!">
+        <input type="submit" class="btn yellow" value="Post!">
     </form>
 {% endblock body %}

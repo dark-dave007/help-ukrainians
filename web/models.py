@@ -1,4 +1,5 @@
 from django.contrib.auth.models import AbstractUser
+from django.utils import timezone
 from django.db import models
 
 # Create your models here.
@@ -47,6 +48,8 @@ class Request(models.Model):
         User, on_delete=models.CASCADE, related_name="requests"
     )
 
+    date_created = models.DateTimeField(auto_created=True, default=timezone.now)
+
     ended_manually = models.BooleanField(default=False)
 
     def __str__(self):
@@ -54,6 +57,9 @@ class Request(models.Model):
 
     def ended(self):
         return self.ended_manually
+
+    def get_type(self):
+        return "request"
 
 
 class Donation(models.Model):
@@ -72,6 +78,8 @@ class Donation(models.Model):
         User, on_delete=models.CASCADE, related_name="donations"
     )
 
+    date_created = models.DateTimeField(auto_created=True, default=timezone.now)
+
     ended_manually = models.BooleanField(default=False)
 
     def __str__(self):
@@ -79,3 +87,6 @@ class Donation(models.Model):
 
     def ended(self):
         return self.ended_manually
+
+    def get_type(self):
+        return "donation"

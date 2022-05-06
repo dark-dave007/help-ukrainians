@@ -93,7 +93,10 @@ nav:hover .logo .nav-link {
 }
 
 main {
+    display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     text-align: center;
     padding-top: 25px;
     margin-left: 5rem;
@@ -154,7 +157,118 @@ h1 {
 }
 
 a {
-    text-decoration: underline;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Card for request / donation */
+
+.card {
+    position: relative;
+    width: 320px;
+    height: 420px;
+    border-radius: 20px;
+    border: 2px solid var(--blue);
+    background: var(--yellow);
+    margin: .25rem 0;
+    overflow: hidden;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    width: 320px;
+    height: 420px;
+    top: -50%;
+    left: 0;
+    background: var(--blue);
+    transform: skewY(-15deg);
+    transition: 0.5s;
+}
+
+.card:hover::before {
+    transform: skewY(0deg);
+}
+
+.card .img-box {
+    position: relative;
+    width: 100%;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 20px;
+    z-index: 1;
+    color: var(--yellow);
+}
+
+.card .img-box img {
+    max-height: 220px;
+    transition: 0.5s;
+}
+
+.card:hover .img-box img {
+    max-height: 200px;
+    padding-bottom: 15px;
+}
+
+.card .content {
+    position: relative;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 1;
+}
+
+.card .content h1 {
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.card .content .get {
+    position: relative;
+    top: 200px;
+    opacity: 0;
+    padding: 10px 30px;
+    margin-top: 15px;
+    text-decoration: none;
+    background: var(--blue);
+    color: var(--yellow);
+    border-radius: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: 0.5s;
+}
+
+.card:hover .content .get {
+    top: 0;
+    opacity: 1;
+}
+
+@media only screen and (max-width: 850px) {
+
+    .card::before {
+        transform: skewY(0deg);
+    }
+
+    .card .content .get {
+        top: 0;
+        opacity: 1;
+    }
+}
+
+/* End card */
+
+.post-form {
+    width: 400px;
+    border-radius: 3rem;
+    text-align: center;
+    position: relative;
+    background: var(--blue);
+    color: var(--yellow);
 }
 
 .input-group {
@@ -172,6 +286,13 @@ a {
     border: 1px solid var(--blue);
     border-radius: 0.25rem;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.text-input-75 {
+    width: 75%;
+    max-width: 75%;
+    padding: .4rem .75rem;
+    margin: 0.1rem 0;
 }
 
 .text-input:hover {
@@ -194,4 +315,10 @@ a {
     margin: 15px;
     transition: all 0.5s ease;
     cursor: pointer;
+}
+
+.yellow {
+    color: var(--blue);
+    background-color: var(--yellow);
+    border: 1px solid var(--yellow);
 }

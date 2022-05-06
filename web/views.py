@@ -4,12 +4,23 @@ from django.db import IntegrityError
 from django.shortcuts import HttpResponseRedirect, render
 from django.urls import reverse
 
-from .forms import RequestForm
-from .models import Request, User
+from .forms import DonationForm, RequestForm
+from .models import Donation, Request, User
+
+from itertools import chain
+from operator import attrgetter
 
 
 def index(request):
-    return render(request, "web/index.html", {"images": Request.objects.all()})
+    result_list = sorted(
+        chain(Request.objects.all(), Donation.objects.all()),
+        key=attrgetter("date_created"),
+    )
+    return render(
+        request,
+        "web/index.html",
+        {"images": result_list},
+    )
 
 
 @login_required(login_url="web/login.html")
@@ -37,7 +48,7 @@ def post_request(request):
                 "web/post.html",
                 {
                     "message": "Required field(s) missing.",
-                    "type": "request",
+                    "type": "Request",
                     "url": "post_request",
                     "form": RequestForm(),
                 },
@@ -46,7 +57,45 @@ def post_request(request):
     return render(
         request,
         "web/post.html",
-        {"type": "request", "url": "post_request", "form": RequestForm(None)},
+        {"type": "Request", "url": "post_request", "form": RequestForm(None)},
+    )
+
+
+@login_required(login_url="web/login.html")
+def post_donation(request):
+    if request.method == "POST":
+        form = DonationForm(request.POST, request.FILES)
+        if form.is_valid():
+            title = form.cleaned_data["title"]
+            description = form.cleaned_data["description"]
+            img = form.cleaned_data["img"]
+            category = form.cleaned_data["category"]
+
+            Donation(
+                title=title,
+                description=description,
+                img=img,
+                category=category,
+                creator=request.user,
+            ).save()
+
+            return HttpResponseRedirect(reverse("index"))
+        else:
+            return render(
+                request,
+                "web/post.html",
+                {
+                    "message": "Required field(s) missing.",
+                    "type": "Donation",
+                    "url": "post_donation",
+                    "form": DonationForm(),
+                },
+            )
+
+    return render(
+        request,
+        "web/post.html",
+        {"type": "Donation", "url": "post_donation", "form": DonationForm(None)},
     )
 
 
