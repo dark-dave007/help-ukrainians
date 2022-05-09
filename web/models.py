@@ -4,7 +4,7 @@ from django.db import models
 
 # Create your models here.
 class User(AbstractUser):
-    pass
+    location = models.CharField(max_length=64, default="Antwerp")
 
 
 class Category(models.Model):

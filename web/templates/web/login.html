@@ -17,7 +17,8 @@
         <div class="input-group">
             <input class="text-input" type="password" name="password" placeholder="Password">
         </div>
-        <input type="submit" class="btn" value="Login">
+        <input type="submit" class="btn" value="Log in">
     </form>
-    <p>Don't have an account? <a href="{% url 'register' %}">Register here.</a></p>
+    <p>Don't have an account? <a href="{% url 'register' %}" class="underline">Register here.</a></p>
+    <p>Forgot password? <a href="{% url 'reset_password' %}" class="underline">Reset password.</a></p>
 {% endblock body %}

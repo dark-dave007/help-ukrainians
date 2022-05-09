@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,800&display=swap');
+
 :root {
     --blue: #0057B7;
     --yellow: #FFDD00;
@@ -28,6 +30,7 @@ header {
 nav {
     position: fixed;
     background: var(--yellow);
+    z-index: 999;
     /* transition: width 200ms ease; Animation for nav hover */
 }
 
@@ -262,6 +265,50 @@ a {
 
 /* End card */
 
+/* Card for specific product */
+
+/* responsive */
+@media (max-width: 1080px) {
+    .container {
+        height: auto;
+    }
+    .container .imgBx {
+        padding: 40px;
+        box-sizing: border-box;
+        width: 100% !important;
+        height: auto;
+        text-align: center;
+        overflow: hidden;
+    }
+    .container .imgBx img {
+        left: initial;
+        max-width: 100%;
+        transform: rotate(0deg);
+    }
+    .details {
+        width: 100% !important;
+        height: auto;
+        padding: 20px;
+    }
+    .container .details p {
+        margin-left: 0;
+        max-width: 100%;
+    }
+}
+
+footer {
+    position: fixed;
+    right: 16px;
+    bottom: 12px;
+}
+
+footer a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 12px;
+}
+/* End specifics */
+
 .post-form {
     width: 400px;
     border-radius: 3rem;
@@ -321,4 +368,12 @@ a {
     color: var(--blue);
     background-color: var(--yellow);
     border: 1px solid var(--yellow);
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+.align-left {
+    text-align: left;
 }

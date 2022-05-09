@@ -15,6 +15,9 @@
             <input autofocus="" class="text-input" type="email" name="email" placeholder="Email">
         </div>
         <div class="input-group">
+            <input autofocus="" class="text-input" type="text" name="location" placeholder="Location: e.g. Knokke-Heist">
+        </div>
+        <div class="input-group">
             <input class="text-input" type="password" name="password" placeholder="Password">
         </div>
         <div class="input-group">
@@ -22,7 +25,7 @@
         </div>
         <input type="submit" class="btn" value="Sign up">
     </form>
-    <p>Already have an account? <a href="{% url 'login' %}">Login here.</a></p>
+    <p>Already have an account? <a href="{% url 'login' %}" class="underline">Login here.</a></p>
 {% endblock body %}
 
     
