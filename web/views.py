@@ -1,3 +1,4 @@
+import os
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
@@ -12,6 +13,7 @@ from operator import attrgetter
 
 
 def index(request):
+    print(os.environ.get("EMAIL_HOST_PASSWORD"))
     result_list = sorted(
         chain(Request.objects.all(), Donation.objects.all()),
         key=attrgetter("date_created"),
@@ -21,6 +23,32 @@ def index(request):
         "web/index.html",
         {"images": result_list},
     )
+
+
+def item(request, type: str, id: int):
+    if type == "donation":
+        item = Donation.objects.get(pk=id)
+    else:
+        item = Request.objects.get(pk=id)
+
+    return render(
+        request,
+        "web/item.html",
+        {"item": item},
+    )
+
+
+@login_required(login_url="web/login.html")
+def close_item(request, type: str, id: int):
+    if type == "donation":
+        item = Donation.objects.get(pk=id)
+    else:
+        item = Request.objects.get(pk=id)
+    if request.user == item.creator:
+        item.ended_manually = True
+        item.save()
+
+    return HttpResponseRedirect(reverse("item", kwargs={"type": type, "id": id}))
 
 
 @login_required(login_url="web/login.html")
@@ -122,6 +150,7 @@ def login_view(request):
         return render(request, "web/login.html")
 
 
+@login_required(login_url="web/login.html")
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("index"))
@@ -132,8 +161,25 @@ def register(request):
         import re
 
         EMAIL_REGEX = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
-
         username = request.POST["username"]
+        location = request.POST["location"]
+
+        # Ensure username and location are long enough
+        if len(username) < 3:
+            return render(
+                request,
+                "web/register.html",
+                {"message": "Username must be at least 3 characters long."},
+            )
+        if len(location) < 5:
+            return render(
+                request,
+                "web/register.html",
+                {"message": "Location must be at least 5 characters long."},
+            )
+        else:
+            location = location.title()
+
         email = request.POST["email"]
 
         # Ensure valid email address
@@ -150,9 +196,16 @@ def register(request):
                 request, "web/register.html", {"message": "Passwords must match."}
             )
 
+        if len(password) < 8:
+             return render(
+                request, "web/register.html", {"message": "Password must contain at least 8 characters."}
+            )
+
         # Attempt to create new user
         try:
-            user = User.objects.create_user(username, email, password)
+            user = User.objects.create_user(
+                username, email, password, location=location
+            )
             user.save()
         except IntegrityError:
             return render(

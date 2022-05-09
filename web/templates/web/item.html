@@ -1,0 +1,35 @@
+{% extends 'web/layout.html' %}
+
+{% block header %}
+    <h1>{{ item.title }}</h1>
+{% endblock header %}
+
+{% block body %}
+    <div class="item-card">
+        <div class="img-box">
+        {% if post.img %}
+            <img src="{{ item.img.url }}">
+        {% else %}
+            <div class="content">
+                <i class="fas fa-image fa-fw"></i>
+                <p>No Image</p>
+            </div>
+        {% endif %}
+        </div>
+        <div class="content">
+            <h1>{{ item.title }}</h1>
+            <p>@{{ item.creator.username }}</p>
+            <h2 class="category">{{ item.category }}</h2>
+            <p>{{ item.description }}</p>
+            <p>Location: {{ item.creator.location }}</p>
+            {% if not item.ended %}
+                <a href="mailto:{{ item.creator.email }}" class="get">Get/Donate item</a>
+            {% else %}
+                <a href="{% url 'index' %}" class="get">Item donated/taken.</a>
+            {% endif %}
+        </div>
+    </div>
+    {% if request.user == item.creator %}
+        <a class="btn" href="{% url 'close_item' item.get_type item.id %}">Completed / Finished</a>
+    {% endif %}
+{% endblock body %}
