@@ -1,4 +1,5 @@
 import os
+from sys import displayhook
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
@@ -13,7 +14,6 @@ from operator import attrgetter
 
 
 def index(request):
-    print(os.environ.get("EMAIL_HOST_PASSWORD"))
     result_list = sorted(
         chain(Request.objects.all(), Donation.objects.all()),
         key=attrgetter("date_created"),
@@ -162,14 +162,21 @@ def register(request):
 
         EMAIL_REGEX = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
         username = request.POST["username"]
+        display_name = request.POST["display_name"]
         location = request.POST["location"]
 
-        # Ensure username and location are long enough
+        # Ensure username, display name and location are long enough
         if len(username) < 3:
             return render(
                 request,
                 "web/register.html",
                 {"message": "Username must be at least 3 characters long."},
+            )
+        if len(display_name) < 3:
+            return render(
+                request,
+                "web/register.html",
+                {"message": "Display name must be at least 3 characters long."},
             )
         if len(location) < 5:
             return render(
@@ -197,14 +204,20 @@ def register(request):
             )
 
         if len(password) < 8:
-             return render(
-                request, "web/register.html", {"message": "Password must contain at least 8 characters."}
+            return render(
+                request,
+                "web/register.html",
+                {"message": "Password must contain at least 8 characters."},
             )
 
         # Attempt to create new user
         try:
             user = User.objects.create_user(
-                username, email, password, location=location
+                username,
+                email,
+                password,
+                location=location,
+                display_name=display_name,
             )
             user.save()
         except IntegrityError:

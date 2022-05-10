@@ -9,13 +9,16 @@
     <form action="{% url 'register' %}" method="post">
         {% csrf_token %}
         <div class="input-group">
-            <input autofocus="" class="text-input" type="text" name="username" placeholder="Dirk J.">
+            <input autofocus="" class="text-input" type="text" name="username" placeholder="Username: johndoe">
+        </div>
+        <div class="input-group">
+            <input autofocus="" class="text-input" type="text" name="display_name" placeholder="Display name: John Doe">
         </div>
         <div class="input-group">
             <input autofocus="" class="text-input" type="email" name="email" placeholder="Email">
         </div>
         <div class="input-group">
-            <input autofocus="" class="text-input" type="text" name="location" placeholder="Location: e.g. Knokke-Heist">
+            <input autofocus="" class="text-input" type="text" name="location" placeholder="Location: Knokke-Heist">
         </div>
         <div class="input-group">
             <input class="text-input" type="password" name="password" placeholder="Password">

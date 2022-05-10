@@ -5,6 +5,7 @@ from django.db import models
 # Create your models here.
 class User(AbstractUser):
     location = models.CharField(max_length=64, default="Antwerp")
+    display_name = models.CharField(max_length=32, default="John Doe")
 
 
 class Category(models.Model):
@@ -13,6 +14,8 @@ class Category(models.Model):
     class Meta:
         # order alphabetically
         ordering = ("name",)
+        verbose_name = "Category"
+        verbose_name_plural = "Categories"
 
     @property
     def count_active_requests(self):

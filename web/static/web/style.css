@@ -203,6 +203,8 @@ a {
     padding-top: 20px;
     z-index: 1;
     color: var(--yellow);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
 }
 
 .card .img-box img {
@@ -263,38 +265,16 @@ a {
     }
 }
 
-/* End card */
-
-/* Card for specific product */
-
-/* responsive */
-@media (max-width: 1080px) {
-    .container {
-        height: auto;
-    }
-    .container .imgBx {
-        padding: 40px;
-        box-sizing: border-box;
-        width: 100% !important;
-        height: auto;
-        text-align: center;
-        overflow: hidden;
-    }
-    .container .imgBx img {
-        left: initial;
-        max-width: 100%;
-        transform: rotate(0deg);
-    }
-    .details {
-        width: 100% !important;
-        height: auto;
-        padding: 20px;
-    }
-    .container .details p {
-        margin-left: 0;
-        max-width: 100%;
+@media not all and (min-resolution:.001dpcm) { 
+    @supports (-webkit-appearance:none) and (stroke-color:transparent) {
+        /* Safari only */
+        .card::before { 
+            transform: skewY(0deg);
+        }
     }
 }
+
+/* End card */
 
 footer {
     position: fixed;
