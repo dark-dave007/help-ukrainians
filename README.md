@@ -5,8 +5,8 @@
 The first thing to do is clone this repository:
 
 ```bash
-git clone https://github.com/dark-dave007/cs50w-network
-cd cs50w-network
+git clone https://github.com/dark-dave007/help-ukrainians
+cd help-ukrainians
 ```
 
 Install dependencies:
