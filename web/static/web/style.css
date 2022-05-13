@@ -1,11 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope&display=swap');
 
 :root {
     --blue: #0057B7;
     --yellow: #FFDD00;
     --transition-speed: 600ms;
     font-size: 16px;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Manrope', sans-serif;
 }
 
 * {
@@ -17,6 +18,7 @@
 body {
     background-color: var(--yellow);
     color: var(--blue);
+    margin-bottom: 5rem;
 }
 
 header {
@@ -25,6 +27,31 @@ header {
     padding: 10px 0 25px 0;
     background-color: var(--blue);
     color: var(--yellow);
+}
+
+select {
+    display: block;
+    width: 100%;
+    padding: .375rem 2.25rem .375rem .75rem;
+    -moz-padding-start: calc(0.75rem - 3px);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--blue);
+    background-color: #fff;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right .75rem center;
+    background-size: 16px 12px;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    appearance: none;
+}
+
+.small {
+    width: auto;
+    display: inline;
 }
 
 nav {
@@ -131,8 +158,10 @@ main {
         justify-content: center;
     }
 
-    main {
-        margin: 0;
+    section form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
 }
@@ -255,6 +284,11 @@ a {
 
 @media only screen and (max-width: 850px) {
 
+    .card .img-box img {
+        max-height: 200px;
+        padding-bottom: 15px;
+    }
+
     .card::before {
         transform: skewY(0deg);
     }
@@ -276,6 +310,35 @@ a {
 
 /* End card */
 
+.item-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 50%;
+    border-radius: 40px;
+    padding: 15px;
+    background-color: var(--blue);
+    color: var(--yellow);
+}
+
+.card__cover {
+    max-height: 250px;
+    width: auto;
+}
+
+.card__cover img {
+    max-height: 250px;
+}
+
+.card__content {
+    /* Take available height */
+    flex: 1;
+}
+
+.username, .complete {
+    font-family: "Poppins";
+    font-weight: 600;
+}
+
 footer {
     position: fixed;
     right: 16px;
@@ -287,13 +350,11 @@ footer a {
     text-decoration: none;
     font-size: 12px;
 }
-/* End specifics */
 
 .post-form {
-    width: 400px;
-    border-radius: 3rem;
+    padding: 1rem 2rem;
+    border-radius: 0.25rem;
     text-align: center;
-    position: relative;
     background: var(--blue);
     color: var(--yellow);
 }
@@ -305,7 +366,7 @@ footer a {
 
 .text-input {
     display: inline-block;
-    width: auto;
+    /* width: auto; */
     padding: .375rem .75rem;
     line-height: 1.5;
     font-size: 0.9rem;
@@ -315,11 +376,8 @@ footer a {
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
-.text-input-75 {
-    width: 75%;
-    max-width: 75%;
-    padding: .4rem .75rem;
-    margin: 0.1rem 0;
+.form-text-input {
+    width: 100%;
 }
 
 .text-input:hover {
@@ -342,6 +400,44 @@ footer a {
     margin: 15px;
     transition: all 0.5s ease;
     cursor: pointer;
+}
+
+.less-mg {
+    margin: 5px;
+}
+
+input[type="file"]::file-selector-button {
+    padding: .375rem .75rem;
+    margin: -.375rem -.75rem;
+    -webkit-margin-end: .75rem;
+    margin-inline-end: .75rem;
+    background-color: #e9ecef;
+    pointer-events: none;
+    border-color: inherit;
+    border-style: solid;
+    border-width: 0;
+    border-inline-end-width: 1px;
+    border-radius: 0;
+}
+
+input[type="file"] {
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    color: var(--blue);
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: .25rem;
+    overflow: hidden;
+}
+
+input[type="checkbox"] {
+    width: 1rem;
+    height: 1rem;
 }
 
 .yellow {

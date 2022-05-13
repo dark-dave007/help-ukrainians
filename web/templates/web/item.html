@@ -6,30 +6,35 @@
 
 {% block body %}
     <div class="item-card">
-        <div class="img-box">
-        {% if post.img %}
-            <img src="{{ item.img.url }}">
-        {% else %}
-            <div class="content">
-                <i class="fas fa-image fa-fw"></i>
-                <p>No Image</p>
-            </div>
-        {% endif %}
-        </div>
-        <div class="content">
-            <h1>{{ item.title }}</h1>
-            <p>@{{ item.creator.display_name }}</p>
-            <h2 class="category">{{ item.category }}</h2>
-            <p>{{ item.description }}</p>
-            <p>Location: {{ item.creator.location }}</p>
-            {% if not item.ended and user.is_authenticated %}
-                <a href="mailto:{{ item.creator.email }}" class="get">Get/Donate item</a>
+        <div class="card__cover">
+            {% if item.img %}
+                <img src="{{ item.img.url }}">
             {% else %}
-                <a href="{% url 'index' %}" class="get">Item donated/taken.</a>
+                <div class="content">
+                    <i class="fas fa-image fa-fw"></i>
+                    <p>No Image</p>
+                </div>
+            {% endif %}
+        </div>
+        <div class="card__content">
+            <h1>{{ item.title }}</h1>
+            <h2 class="category">{{ item.category }}</h2>
+            <p class="username">@{{ item.creator.display_name }}</p>
+            <div class="item__description">
+                <p>{{ item.description }}</p>
+            </div>
+            <p>Location: {{ item.creator.location }}</p>
+            {% if request.user == item.creator and not item.ended %}
+                <a class="btn yellow complete" href="{% url 'close_item' item.get_type item.id %}">Completed / Finished</a>
+            {% elif not item.ended and user.is_authenticated %}
+                <a href="mailto:{{ item.creator.email }}" class="btn yellow">{{ item.get_verb|title }} item</a>
+            {% elif not user.is_authenticated %}
+                <a href="{% url 'login' %}" target="_blank" class="btn yellow">Please login to {{  item.get_verb }} the item!</a>
+            {% elif request.user == item.creator %}
+                <a class="btn yellow complete" href="{% url 'index' %}">You've closed this item page.</a>
+            {% else %}
+                <a href="{% url 'index' %}" class="btn yellow">Item donated/taken.</a>
             {% endif %}
         </div>
     </div>
-    {% if request.user == item.creator %}
-        <a class="btn" href="{% url 'close_item' item.get_type item.id %}">Completed / Finished</a>
-    {% endif %}
 {% endblock body %}

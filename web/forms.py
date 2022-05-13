@@ -42,49 +42,70 @@ class MyResetPasswordForm(PasswordResetForm):
     )
 
 
-class RequestForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(RequestForm, self).__init__(*args, **kwargs)
-
-        placeholders = ["Product you want", "Description of the item"]
-
-        for index, field in enumerate(self.Meta.fields):
-            self.fields[field].widget.attrs.update(
-                {"class": "text-input, text-input-75"}
-            )
-
-            if index < 2:
-                self.fields[field].widget.attrs.update(
-                    {"placeholder": placeholders[index]}
-                )
-
-            if field == "img":
-                continue
-            self.fields[field].required = True
-
-    class Meta:
-        model = Request
-        fields = ["title", "description", "img", "category"]
+class FilterPostsForm(forms.Form):
+    categories = forms.ModelChoiceField(
+        Category.objects.all(),
+        empty_label="Choose a category",
+        required=False,
+        widget=forms.Select(attrs={"class": "small"}),
+    )
+    requests = forms.BooleanField(required=False)
+    donations = forms.BooleanField(required=False)
 
 
-class DonationForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(DonationForm, self).__init__(*args, **kwargs)
+class RequestForm(forms.Form):
+    title = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Product you want",
+                "class": "text-input form-text-input",
+            }
+        ),
+        required=True,
+    )
+    description = forms.CharField(
+        widget=forms.Textarea(
+            attrs={
+                "placeholder": "Description of the product",
+                "class": "text-input form-text-input",
+                "style": "resize:none;",
+            }
+        ),
+        required=True,
+    )
+    img = forms.ImageField(label="Image")
+    category = forms.ModelChoiceField(
+        Category.objects.all(),
+        label="Category",
+        required=True,
+        empty_label="Choose a category",
+    )
 
-        placeholders = ["Product you have to give away", "Description of the item"]
 
-        for index, field in enumerate(self.Meta.fields):
-            self.fields[field].widget.attrs.update(
-                {"class": "text-input, text-input-75"}
-            )
-
-            if index < 2:
-                self.fields[field].widget.attrs.update(
-                    {"placeholder": placeholders[index]}
-                )
-
-            self.fields[field].required = True
-
-    class Meta:
-        model = Donation
-        fields = ["title", "description", "img", "category"]
+class DonationForm(forms.Form):
+    title = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Product you want",
+                "class": "text-input form-text-input",
+            }
+        ),
+        required=True,
+    )
+    description = forms.CharField(
+        widget=forms.Textarea(
+            attrs={
+                "placeholder": "Description of the product",
+                "class": "text-input form-text-input",
+                "style": "resize:none;",
+            }
+        ),
+        required=True,
+    )
+    img = forms.ImageField(label="Image", required=True)
+    category = forms.ModelChoiceField(
+        Category.objects.all(),
+        label="Category",
+        required=True,
+        empty_label="Choose a category",
+    )

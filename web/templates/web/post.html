@@ -9,11 +9,18 @@
     {% if message %}<div>{{ message }}</div>{% endif %}
     <form action="{% url url %}" method="post" enctype="multipart/form-data" class="post-form">
         {% csrf_token %}
-        {% for x in form %}
-            <div class="input-group">
-                {{ x }}
-            </div>
-        {% endfor %}
+        <div class="input-group">
+            Title: {{ form.title }}
+        </div>
+        <div class="input-group">
+            Description: {{ form.description }}
+        </div>
+        <div class="input-group">
+            Image: {{ form.img }}
+        </div>
+        <div class="input-group">
+            Category: {{ form.category }}
+        </div>
         <input type="submit" class="btn yellow" value="Post!">
     </form>
 {% endblock body %}

@@ -1,28 +1,88 @@
-import os
-from sys import displayhook
+from itertools import chain
+from operator import attrgetter
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.db import IntegrityError
 from django.shortcuts import HttpResponseRedirect, render
 from django.urls import reverse
 
-from .forms import DonationForm, RequestForm
+from .forms import DonationForm, FilterPostsForm, RequestForm
 from .models import Donation, Request, User
-
-from itertools import chain
-from operator import attrgetter
 
 
 def index(request):
+    requests = Request.objects.filter(ended_manually=False)
+    donations = Donation.objects.filter(ended_manually=False)
+
     result_list = sorted(
-        chain(Request.objects.all(), Donation.objects.all()),
-        key=attrgetter("date_created"),
+        chain(requests, donations), key=attrgetter("date_created"), reverse=True
     )
+
+    paginator = Paginator(result_list, 20)  # Show 20 posts per page.
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    initial = {
+        "category": None,
+        "requests": True,
+        "donations": True,
+    }
+
     return render(
         request,
         "web/index.html",
-        {"images": result_list},
+        {
+            "page_obj": page_obj,
+            "filter_form": FilterPostsForm(initial=initial),
+        },
     )
+
+
+def post_filter(request):
+    if request.method == "POST":
+        form = FilterPostsForm(request.POST)
+        if form.is_valid():
+            category = form.cleaned_data["categories"]
+            request_checked = form.cleaned_data["requests"]
+            donation_checked = form.cleaned_data["donations"]
+
+            requests = []
+            donations = []
+
+            if category:  # Need a better way to write this, too tired to find one
+                if request_checked:
+                    requests = Request.objects.filter(
+                        ended_manually=False, category=category
+                    )
+                if donation_checked:
+                    donations = Donation.objects.filter(
+                        ended_manually=False, category=category
+                    )
+            else:
+                if request_checked:
+                    requests = Request.objects.filter(ended_manually=False)
+                if donation_checked:
+                    donations = Donation.objects.filter(ended_manually=False)
+
+            result_list = sorted(
+                chain(requests, donations), key=attrgetter("date_created"), reverse=True
+            )
+
+            paginator = Paginator(result_list, 20)  # Show 20 posts per page.
+            page_number = request.GET.get("page")
+            page_obj = paginator.get_page(page_number)
+
+            return render(
+                request,
+                "web/index.html",
+                {
+                    "page_obj": page_obj,
+                    "filter_form": form,
+                },
+            )
+        else:
+            return HttpResponseRedirect(reverse("index"))
 
 
 def item(request, type: str, id: int):
@@ -51,7 +111,7 @@ def close_item(request, type: str, id: int):
     return HttpResponseRedirect(reverse("item", kwargs={"type": type, "id": id}))
 
 
-@login_required(login_url="web/login.html")
+@login_required(login_url="login")
 def post_request(request):
     if request.method == "POST":
         form = RequestForm(request.POST, request.FILES)

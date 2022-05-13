@@ -2,11 +2,18 @@
 
 {% block header %}
     <h1>Home</h1>
+    <section>
+        <form action="{% url 'filter' %}" method="post">
+            {% csrf_token %}
+            {{ filter_form }}
+            <input type="submit" class="btn yellow" value="Apply filter(s)">
+        </form>
+    </section>
 {% endblock header %}
 
 {% block body %}
     <h1>Main content</h1>
-    {% for post in images %}
+    {% for post in page_obj %}
     <div class="card">
         <div class="img-box">
         {% if post.img %}
@@ -22,13 +29,27 @@
             <h1>{{ post.title }}</h1>
             <h2 class="category">{{ post.category }}</h2>
             <a href="{% url 'item' post.get_type post.id %}" class="get">
-                {% if post.get_type == "donation" %}
-                Get item
-                {% else %}
-                Donate item
-                {% endif %}
+                {{ post.get_verb|title }} item
             </a>
         </div>
     </div>
     {% endfor %}
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1" class="btn less-mg">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}" class="btn less-mg">previous</a>
+            {% endif %}
+    
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+    
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="btn less-mg">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}" class="btn less-mg">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
 {% endblock body %}

@@ -64,6 +64,9 @@ class Request(models.Model):
     def get_type(self):
         return "request"
 
+    def get_verb(self):
+        return "donate"
+
 
 class Donation(models.Model):
     title = models.CharField(max_length=128)
@@ -93,3 +96,6 @@ class Donation(models.Model):
 
     def get_type(self):
         return "donation"
+
+    def get_verb(self):
+        return "get"
