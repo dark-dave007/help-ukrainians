@@ -19,7 +19,7 @@
         <div class="card__content">
             <h1>{{ item.title }}</h1>
             <h2 class="category">{{ item.category }}</h2>
-            <p class="username">@{{ item.creator.display_name }}</p>
+            <p class="username"><a href="{% url 'user_posts' item.creator.username %}">@{{ item.creator.display_name }}</a></p>
             <div class="item__description">
                 <p>{{ item.description }}</p>
             </div>

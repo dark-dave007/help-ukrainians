@@ -85,6 +85,34 @@ def post_filter(request):
             return HttpResponseRedirect(reverse("index"))
 
 
+def user_posts(request, username: str):
+    user = User.objects.get(username=username)
+    user_posts = sorted(
+        chain(user.requests.all(), user.donations.all()),
+        key=attrgetter("date_created"),
+        reverse=True,
+    )
+
+    paginator = Paginator(user_posts, 20)  # Show 20 posts per page.
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    initial = {
+        "category": None,
+        "requests": True,
+        "donations": True,
+    }
+
+    return render(
+        request,
+        "web/index.html",
+        {
+            "page_obj": page_obj,
+            "filter_form": FilterPostsForm(initial=initial),
+        },
+    )
+
+
 def item(request, type: str, id: int):
     if type == "donation":
         item = Donation.objects.get(pk=id)
