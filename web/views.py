@@ -109,6 +109,7 @@ def user_posts(request, username: str):
         {
             "page_obj": page_obj,
             "filter_form": FilterPostsForm(initial=initial),
+            "header_title": user.display_name.title(),
         },
     )
 

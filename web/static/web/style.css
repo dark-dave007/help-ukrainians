@@ -29,7 +29,12 @@ header {
     color: var(--yellow);
 }
 
+section form * {
+    margin: 5px;
+}
+
 select {
+    /* Thanks to bootstrap 5.0 */
     display: block;
     width: 100%;
     padding: .375rem 2.25rem .375rem .75rem;
@@ -159,9 +164,15 @@ main {
     }
 
     section form {
-        display: flex;
-        flex-direction: column;
+        display: grid;
+        grid-template: auto / auto auto;
         align-items: center;
+        justify-content: center;
+    }
+
+    section form input[type="submit"] {
+        grid-column-start: 1;
+        grid-column-end: 3;
     }
 
 }
@@ -314,7 +325,7 @@ a {
     display: flex;
     flex-direction: column;
     min-width: 50%;
-    border-radius: 40px;
+    border-radius: 0.25rem;
     padding: 15px;
     background-color: var(--blue);
     color: var(--yellow);
@@ -399,6 +410,7 @@ footer a {
     padding: .375rem .75rem;
     margin: 15px;
     transition: all 0.5s ease;
+    transition: background-size 300ms ease;
     cursor: pointer;
 }
 
@@ -407,6 +419,7 @@ footer a {
 }
 
 input[type="file"]::file-selector-button {
+    /* Thanks to bootstrap 5.0 */
     padding: .375rem .75rem;
     margin: -.375rem -.75rem;
     -webkit-margin-end: .75rem;
@@ -421,6 +434,7 @@ input[type="file"]::file-selector-button {
 }
 
 input[type="file"] {
+    /* Thanks to bootstrap 5.0 */
     display: block;
     width: 100%;
     padding: .375rem .75rem;

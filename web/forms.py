@@ -46,6 +46,7 @@ class FilterPostsForm(forms.Form):
     categories = forms.ModelChoiceField(
         Category.objects.all(),
         empty_label="Choose a category",
+        label="Category",
         required=False,
         widget=forms.Select(attrs={"class": "small"}),
     )
