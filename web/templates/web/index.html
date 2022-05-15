@@ -1,7 +1,11 @@
 {% extends "web/layout.html" %} 
 
 {% block header %}
-    <h1>Home</h1>
+    {% if header_title %}
+        <h1>{{ header_title }}</h1>
+    {% else %}
+        <h1>Home</h1>
+    {% endif %}
     <section>
         <form action="{% url 'filter' %}" method="post">
             {% csrf_token %}
@@ -52,4 +56,5 @@
             {% endif %}
         </span>
     </div>
+    <footer>Made with ❤️ by <a href="mailto:davideitan000@gmail.com" style="color: var(--blue);" class="underline">David L.</a></footer>
 {% endblock body %}

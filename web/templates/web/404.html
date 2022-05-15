@@ -1,0 +1,11 @@
+{% extends "web/layout.html" %} 
+
+{% block title %}Error 404{% endblock title %}
+
+{% block header %}
+    <h1>Error 404</h1>
+{% endblock header %}
+
+{% block body %}
+    <h2>Oh oh! Looks like this page doesn't exist!</h2>
+    <h2><a href="{% url 'index' %}">Bring me home</a></h2>

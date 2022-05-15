@@ -109,6 +109,7 @@ def user_posts(request, username: str):
         {
             "page_obj": page_obj,
             "filter_form": FilterPostsForm(initial=initial),
+            "header_title": user.display_name.title(),
         },
     )
 
@@ -316,3 +317,11 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "web/register.html")
+
+
+def page_not_found_view(request):
+    return render(request, "web/404.html")
+
+
+def server_error_view(request):
+    return render(request, "web/500.html")
