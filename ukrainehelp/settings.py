@@ -142,3 +142,7 @@ EMAIL_HOST_PASSWORD = str(os.environ["EMAIL_HOST_PASSWORD"])
 # 404 & 500 config
 handler404 = "web.views.page_not_found_view"
 handler500 = "web.views.server_error_view"
+
+# HTTPS
+# CSRF_COOKIE_SECURE = True
+# SESSION_COOKIE_SECURE = True
