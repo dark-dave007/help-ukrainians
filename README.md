@@ -18,7 +18,7 @@ python3 -m pip install Django
 Migrate:
 
 ```bash
-python3 manage.py makemigrations network
+python3 manage.py makemigrations web
 python3 manage.py migrate
 ```
 
