@@ -21,7 +21,7 @@
     <div class="card">
         <div class="img-box">
         {% if post.img %}
-            <img src="{{ post.img.url }}">
+            <img src="{{ post.img.url }}" alt="Image of the product: {{ post.title }}">
         {% else %}
             <div class="content">
                 <i class="fas fa-image fa-fw"></i>
