@@ -2,6 +2,7 @@ from itertools import chain
 from operator import attrgetter
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator
 from django.db import IntegrityError
 from django.shortcuts import HttpResponseRedirect, render
@@ -116,9 +117,15 @@ def user_posts(request, username: str):
 
 def item(request, type: str, id: int):
     if type == "donation":
-        item = Donation.objects.get(pk=id)
+        try:
+            item = Donation.objects.get(pk=id)
+        except ObjectDoesNotExist:
+            return render(request, "web/404.html")
     else:
-        item = Request.objects.get(pk=id)
+        try:
+            item = Request.objects.get(pk=id)
+        except ObjectDoesNotExist:
+            return render(request, "web/404.html")
 
     return render(
         request,
@@ -319,9 +326,9 @@ def register(request):
         return render(request, "web/register.html")
 
 
-def page_not_found_view(request):
+def page_not_found_view(request, exception="None"):
     return render(request, "web/404.html")
 
 
-def server_error_view(request):
+def server_error_view(request, exception=None):
     return render(request, "web/500.html")
